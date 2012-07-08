@@ -1,6 +1,4 @@
-//
-//  CalculatorBrain.m
-//  Calculator
+//  RPN Calculator model implementation
 //
 //  Created by Eric Rushing on 6/30/12.
 //  Copyright (c) 2012 Septentron Engineering. All rights reserved.
@@ -13,7 +11,7 @@
 
 @property (nonatomic, strong) NSMutableArray *programStack;
 
-+(double)popOperationOffProgramStack: (NSMutableArray *)stack;
++ (double)popOperationOffProgramStack:(NSMutableArray *)stack;
 
 @end
 
@@ -22,39 +20,11 @@
 
 @synthesize programStack = _programStack;
 
--(NSMutableArray *)programStack {
-	if (!_programStack)
-		_programStack = [[NSMutableArray alloc] init];
-	
-	return _programStack;
++ (NSString *)descriptionOfProgram:(id)program {
+  return @"Implement this in Homework #2";
 }
 
--(id) program {
-	return [self.programStack copy];
-}
-
--(void)pushOperand: (double)operand {
-	NSNumber *operandObject = [NSNumber numberWithDouble: operand];
-	[self.programStack addObject: operandObject];
-}
-
--(void)pushVariable: (NSString *)variable {
-	// attempts to push variables with the same names as operations are
-	// not protected against
-	[self.programStack addObject: variable];
-}
-
--(double)performOperation:(NSString *)operation {
-	[self.programStack addObject:operation];
-	return [[self class] runProgram: self.programStack];
-}
-
--(void)clear {
-	[self.programStack removeAllObjects];
-}
-
-
-+(double)popOperationOffProgramStack: (NSMutableArray *)stack {
++ (double)popOperationOffProgramStack:(NSMutableArray *)stack {
 	double result = 0;
 	
 	id topOfStack = [stack lastObject];
@@ -91,7 +61,7 @@
 	return result;
 }
 
-+(double)runProgram: (id)program {
++ (double)runProgram:(id)program {
 	NSMutableArray *stack;
 	if ([program isKindOfClass: [NSArray class]]) {
 		stack = [program mutableCopy];
@@ -100,8 +70,40 @@
 	return [self popOperationOffProgramStack: stack];
 }
 
-+(NSString *)descriptionOfProgram: (id)program {
-	return @"Implement this in Homework #2";
++ (double)runProgram:(id)program
+ usingVariableValues:(NSDictionary *)variableValues {
+  return 0;
+}                                                      
+
+- (NSMutableArray *)programStack {
+	if (!_programStack)
+		_programStack = [[NSMutableArray alloc] init];
+	
+	return _programStack;
+}
+
+- (id) program {
+	return [self.programStack copy];
+}
+
+- (void)pushOperand:(double)operand {
+	NSNumber *operandObject = [NSNumber numberWithDouble: operand];
+	[self.programStack addObject: operandObject];
+}
+
+- (void)pushVariable:(NSString *)variable {
+	// attempts to push variables with the same names as operations are
+	// not protected against
+	[self.programStack addObject: variable];
+}
+
+- (double)performOperation:(NSString *)operation {
+	[self.programStack addObject:operation];
+	return [[self class] runProgram: self.programStack];
+}
+
+- (void)clear {
+	[self.programStack removeAllObjects];
 }
 
 @end
