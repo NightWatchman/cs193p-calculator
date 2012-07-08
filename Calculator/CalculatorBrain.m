@@ -11,17 +11,28 @@
 
 @property (nonatomic, strong) NSMutableArray *programStack;
 
-+ (double)popOperationOffProgramStack:(NSMutableArray *)stack;
-
 @end
 
 
 @implementation CalculatorBrain
 
-@synthesize programStack = programStack_;
-
 + (NSString *)descriptionOfProgram:(id)program {
   return @"Implement this in Homework #2";
+}
+
++ (NSSet *)variablesUsedInProgram:(id)program {
+  NSMutableSet *vars;
+  if ([program isKindOfClass:[NSArray class]]) {
+    for (id operation in program) {
+      if ([operation isKindOfClass:[NSString class]] &&
+          [self isOperation:operation]) {
+        if (!vars) vars = [[NSMutableSet alloc] init];
+        [vars addObject:operation];
+      }
+    }
+  }
+  
+  return [vars copy];
 }
 
 + (double)popOperationOffProgramStack:(NSMutableArray *)stack {
@@ -87,6 +98,24 @@
   
   return [self runProgram:[stack copy]];
 }                                                      
+
++ (BOOL)isOperation:(NSString *)operation {
+  BOOL isOperation = NO;
+  
+  if ([@"+" isEqualToString:operation]) isOperation = YES;
+  else if ([@"*" isEqualToString:operation]) isOperation = YES;
+  else if ([@"-" isEqualToString:operation]) isOperation = YES;
+  else if ([@"/" isEqualToString:operation]) isOperation = YES;
+  else if ([@"sin" isEqualToString:operation]) isOperation = YES;
+  else if ([@"cos" isEqualToString:operation]) isOperation = YES;
+  else if ([@"sqrt" isEqualToString:operation]) isOperation = YES;
+  else if ([@"pi" isEqualToString:operation]) isOperation = YES;
+  else if ([@"switch_sign" isEqualToString:operation]) isOperation = YES;
+  
+  return isOperation;
+}
+
+@synthesize programStack = programStack_;
 
 - (NSMutableArray *)programStack {
 	if (!programStack_)
