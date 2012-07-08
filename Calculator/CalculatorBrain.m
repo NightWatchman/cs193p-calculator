@@ -18,7 +18,7 @@
 
 @implementation CalculatorBrain
 
-@synthesize programStack = _programStack;
+@synthesize programStack = programStack_;
 
 + (NSString *)descriptionOfProgram:(id)program {
   return @"Implement this in Homework #2";
@@ -72,14 +72,27 @@
 
 + (double)runProgram:(id)program
  usingVariableValues:(NSDictionary *)variableValues {
-  return 0;
+  NSMutableArray *stack;
+  if ([program isKindOfClass: [NSArray class]]) stack = [program mutableCopy];
+  
+  id programValue;
+  id variableValue;
+  for (NSUInteger i = 0; i < [stack count]; i++) {
+    programValue = [stack objectAtIndex:i];
+    variableValue = [variableValues objectForKey:programValue];
+    
+    // replaces with nil if variable not defined in variableValues
+    [stack replaceObjectAtIndex:i withObject:variableValue];
+  }
+  
+  return [self runProgram:[stack copy]];
 }                                                      
 
 - (NSMutableArray *)programStack {
-	if (!_programStack)
-		_programStack = [[NSMutableArray alloc] init];
+	if (!programStack_)
+		programStack_ = [[NSMutableArray alloc] init];
 	
-	return _programStack;
+	return programStack_;
 }
 
 - (id) program {
