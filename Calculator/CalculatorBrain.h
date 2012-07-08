@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) id program;
 
 -(void)pushOperand: (double)operand;
+-(void)pushVariable: (NSString *)variable;
 -(double)performOperation: (NSString *)operation;
 -(void)clear;
 +(double)runProgram: (id)program;

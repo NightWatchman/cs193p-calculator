@@ -33,9 +33,15 @@
 	return [self.programStack copy];
 }
 
--(void)pushOperand:(double)operand {
+-(void)pushOperand: (double)operand {
 	NSNumber *operandObject = [NSNumber numberWithDouble: operand];
 	[self.programStack addObject: operandObject];
+}
+
+-(void)pushVariable: (NSString *)variable {
+	// attempts to push variables with the same names as operations are
+	// not protected against
+	[self.programStack addObject: variable];
 }
 
 -(double)performOperation:(NSString *)operation {
