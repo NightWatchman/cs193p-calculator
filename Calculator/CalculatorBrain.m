@@ -34,7 +34,7 @@
   
   return [vars copy];
 }
-
+ 
 + (double)popOperationOffProgramStack:(NSMutableArray *)stack {
 	double result = 0;
 	
