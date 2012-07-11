@@ -34,7 +34,19 @@
   
   return [vars copy];
 }
- 
+
++ (BOOL)isBinaryOperand:(NSString *)operand {
+  NSSet *binaryOperands =
+          [[NSSet alloc] initWithObjects:@"+", @"*", @"-", @"/", nil];
+  return [binaryOperands containsObject:operand];
+}
+
++ (BOOL)isUnaryOperand:(NSString *)operand {
+  NSSet *unaryOperands =
+          [[NSSet alloc] initWithObjects:@"sin",@"cos",@"sqrt", nil];
+  return [unaryOperands containsObject:operand];
+}
+
 + (double)popOperationOffProgramStack:(NSMutableArray *)stack {
 	double result = 0;
 	
