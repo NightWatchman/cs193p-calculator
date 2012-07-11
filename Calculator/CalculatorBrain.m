@@ -17,7 +17,52 @@
 @implementation CalculatorBrain
 
 + (NSString *)descriptionOfProgram:(id)program {
-  return @"Implement this in Homework #2";
+  NSMutableArray *stack;
+	if ([program isKindOfClass: [NSArray class]]) {
+		stack = [program mutableCopy];
+	}
+	
+	return [self descriptionOfTopOfStack: stack];
+}
+
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
+  NSString *description;
+  
+  id topOfStack = [stack lastObject];
+  if (topOfStack) [stack removeLastObject];
+  
+  if ([topOfStack isKindOfClass:[NSString class]]) {  
+    if ([self isBinaryOperand:topOfStack]) {
+      NSString *op1 = [self descriptionOfTopOfStack:stack];
+      NSString *op2 = [self descriptionOfTopOfStack:stack];
+      description = [[NSString alloc]
+                     initWithFormat:@" %@ %@ %@ ", op1, topOfStack, op2];
+    } else if ([self isUnaryOperand:topOfStack]) {
+      NSString *op = [self descriptionOfTopOfStack:stack];
+      description = [[NSString alloc]
+                     initWithFormat:@" %@(%@) ", topOfStack, op];
+    } else {
+      description = topOfStack;
+    }
+  } else if ([topOfStack isKindOfClass:[NSNumber class]]) {
+    description = [[NSString alloc] initWithFormat:@"%g", topOfStack];
+  } else {
+    description = @"ERR";
+  }
+  
+  return description;
+}
+
++ (BOOL)isBinaryOperand:(NSString *)operand {
+  NSSet *binaryOperands =
+  [[NSSet alloc] initWithObjects:@"+", @"*", @"-", @"/", nil];
+  return [binaryOperands containsObject:operand];
+}
+
++ (BOOL)isUnaryOperand:(NSString *)operand {
+  NSSet *unaryOperands =
+  [[NSSet alloc] initWithObjects:@"sin",@"cos",@"sqrt", nil];
+  return [unaryOperands containsObject:operand];
 }
 
 + (NSSet *)variablesUsedInProgram:(id)program {
@@ -33,18 +78,6 @@
   }
   
   return [vars copy];
-}
-
-+ (BOOL)isBinaryOperand:(NSString *)operand {
-  NSSet *binaryOperands =
-          [[NSSet alloc] initWithObjects:@"+", @"*", @"-", @"/", nil];
-  return [binaryOperands containsObject:operand];
-}
-
-+ (BOOL)isUnaryOperand:(NSString *)operand {
-  NSSet *unaryOperands =
-          [[NSSet alloc] initWithObjects:@"sin",@"cos",@"sqrt", nil];
-  return [unaryOperands containsObject:operand];
 }
 
 + (double)popOperationOffProgramStack:(NSMutableArray *)stack {
