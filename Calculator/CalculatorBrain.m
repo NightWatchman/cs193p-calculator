@@ -21,7 +21,13 @@
 		stack = [program mutableCopy];
 	}
 	
-	return [self descriptionOfTopOfStack: stack];
+  NSString *description = [self descriptionOfTopOfStack:stack];
+  while ([stack count] > 0) {
+    description = [description stringByAppendingFormat:
+                   @", %@", [self descriptionOfTopOfStack:stack]];
+  }
+  
+	return description;
 }
 
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
@@ -34,17 +40,19 @@
     if ([self isBinaryOperand:topOfStack]) {
       NSString *op1 = [self descriptionOfTopOfStack:stack];
       NSString *op2 = [self descriptionOfTopOfStack:stack];
+      // outputted in reverse order to negate Reverse Polish order
       description = [[NSString alloc]
-                     initWithFormat:@" %@ %@ %@ ", op1, topOfStack, op2];
+                     initWithFormat:@"%@ %@ %@", op2, topOfStack, op1];
     } else if ([self isUnaryOperand:topOfStack]) {
       NSString *op = [self descriptionOfTopOfStack:stack];
       description = [[NSString alloc]
-                     initWithFormat:@" %@(%@) ", topOfStack, op];
+                     initWithFormat:@"%@(%@)", topOfStack, op];
     } else {
       description = topOfStack;
     }
   } else if ([topOfStack isKindOfClass:[NSNumber class]]) {
-    description = [[NSString alloc] initWithFormat:@"%g", topOfStack];
+    description = [[NSString alloc]
+                   initWithFormat:@"%g", [topOfStack doubleValue]];
   } else {
     description = @"ERR";
   }
