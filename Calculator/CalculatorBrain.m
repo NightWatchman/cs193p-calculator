@@ -68,8 +68,23 @@
 
 + (BOOL)isUnaryOperand:(NSString *)operand {
   NSSet *unaryOperands =
-  [[NSSet alloc] initWithObjects:@"sin",@"cos",@"sqrt", nil];
+  [[NSSet alloc] initWithObjects:@"sin", @"cos", @"sqrt", nil];
   return [unaryOperands containsObject:operand];
+}
+
++ (BOOL)isUnadornedOperand:(NSString *)operand {
+  NSSet *unadornedOperands = [NSSet setWithObjects:@"pi", @"switch_sign", nil];
+  return [unadornedOperands containsObject:operand];
+}
+
++ (BOOL)isOperation:(NSString *)operation {
+  BOOL isOperation = NO;
+  
+  if ([self isBinaryOperand:operation]) isOperation = YES;
+  if ([self isUnaryOperand:operation]) isOperation = YES;
+  if ([self isUnaryOperand:operation]) isOperation = YES;
+  
+  return isOperation;
 }
 
 + (NSSet *)variablesUsedInProgram:(id)program {
@@ -150,22 +165,6 @@
   
   return [self runProgram:[stack copy]];
 }                                                      
-
-+ (BOOL)isOperation:(NSString *)operation {
-  BOOL isOperation = NO;
-  
-  if ([@"+" isEqualToString:operation]) isOperation = YES;
-  else if ([@"*" isEqualToString:operation]) isOperation = YES;
-  else if ([@"-" isEqualToString:operation]) isOperation = YES;
-  else if ([@"/" isEqualToString:operation]) isOperation = YES;
-  else if ([@"sin" isEqualToString:operation]) isOperation = YES;
-  else if ([@"cos" isEqualToString:operation]) isOperation = YES;
-  else if ([@"sqrt" isEqualToString:operation]) isOperation = YES;
-  else if ([@"pi" isEqualToString:operation]) isOperation = YES;
-  else if ([@"switch_sign" isEqualToString:operation]) isOperation = YES;
-  
-  return isOperation;
-}
 
 @synthesize programStack = programStack_;
 
