@@ -1,8 +1,8 @@
 //  RPN Calculator model interface
 //
 //  Created by Eric Rushing on 6/30/12.
-//  Copyright (c) 2012 Septentron Engineering. All rights reserved.
-//
+//  Copyright (c) 2012 Septen. All rights reserved.
+
 
 #import <Foundation/Foundation.h>
 

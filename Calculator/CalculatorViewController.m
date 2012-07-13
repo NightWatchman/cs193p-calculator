@@ -1,10 +1,8 @@
-//
-//  CalculatorViewController.m
-//  Calculator
+//  Controller for calculator view.
 //
 //  Created by Eric Rushing on 6/30/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+//  Copyright (c) 2012 Septen. All rights reserved.
+
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
@@ -67,7 +65,7 @@
 
 - (IBAction)enterPressed {
 	double pushing = [self.display.text doubleValue];
-	self.history.text = [self.history.text stringByAppendingFormat: @"%g ", pushing];
+	self.history.text = [self.history.text stringByAppendingFormat:@"%g ", pushing];
 	[self.brain pushOperand: pushing];
 	self.userIsInTheMiddleOfEnteringNumber = NO;
 }

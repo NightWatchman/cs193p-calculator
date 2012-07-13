@@ -1,9 +1,7 @@
-//
-//  CalculatorViewController.h
-//  Calculator
+//  Controller for calculator view.
 //
 //  Created by Eric Rushing on 6/30/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Septen. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
