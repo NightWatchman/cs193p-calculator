@@ -50,14 +50,27 @@
 }
 
 - (IBAction)backPressed {
-  NSString *displayText = self.display.text;
-	displayText = [displayText substringToIndex: displayText.length - 1];
-	if (displayText.length == 0) {
-		displayText = @"0";
-		self.userIsInTheMiddleOfEnteringNumber = NO;
-	}
-	
-	self.display.text = displayText;
+  if (self.userIsInTheMiddleOfEnteringNumber) {
+    NSString *displayText = self.display.text;
+    displayText = [displayText substringToIndex: displayText.length - 1];
+    if (displayText.length == 0) {
+      self.userIsInTheMiddleOfEnteringNumber = NO;
+		
+      double result = [CalculatorBrain runProgram:self.brain.program
+                              usingVariableValues:self.testVariableValues];
+      displayText = [NSString stringWithFormat:@"%g", result];
+      
+      self.display.text = displayText;
+    }
+  } else {
+    [self.brain removeLastOperation];
+    double result = [CalculatorBrain runProgram:self.brain.program
+                            usingVariableValues:self.testVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+    self.history.text = [CalculatorBrain descriptionOfProgram:
+                         self.brain.program];
+    [self updateVariablesDisplay];
+  }
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -157,7 +170,6 @@
 - (void)viewDidUnload {
 	[self setHistory:nil];
   [self setDisplay:nil];
-  
   [self setVariables:nil];
 	[super viewDidUnload];
 }

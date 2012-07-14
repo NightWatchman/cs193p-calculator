@@ -14,6 +14,7 @@
 - (void)pushOperand:(double)operand;
 - (void)pushVariable:(NSString *)variable;
 - (void)pushOperation:(NSString *)operation;
+- (void)removeLastOperation;
 - (double)performOperation:(NSString *)operation;
 - (void)clear;
 + (double)runProgram:(id)program;

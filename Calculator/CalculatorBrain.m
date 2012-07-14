@@ -207,6 +207,10 @@
   [self.programStack addObject:operation];
 }
 
+- (void)removeLastOperation {
+  [self.programStack removeLastObject];
+}
+
 - (double)performOperation:(NSString *)operation {
 	[self.programStack addObject:operation];
 	return [[self class] runProgram: self.programStack];
