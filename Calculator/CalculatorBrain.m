@@ -76,7 +76,7 @@
 
 + (BOOL)isUnaryOperand:(NSString *)operand {
   NSSet *unaryOperands =
-  [[NSSet alloc] initWithObjects:@"sin", @"cos", @"sqrt", nil];
+  [[NSSet alloc] initWithObjects:@"sin", @"cos", @"sqrt", @"switch_sign", nil];
   return [unaryOperands containsObject:operand];
 }
 

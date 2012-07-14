@@ -88,11 +88,12 @@
 		else
 			self.display.text = [@"-" stringByAppendingString:self.display.text];
 	} else {
+    [self.brain pushOperation:@"switch_sign"];
+    double result = [CalculatorBrain runProgram:self.brain.program
+                            usingVariableValues:self.testVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
     self.history.text = [CalculatorBrain descriptionOfProgram:
                          self.brain.program];
-    
-		double result = [self.brain performOperation:@"switch_sign"];
-		self.display.text = [NSString stringWithFormat:@"%g", result];
 	}
 }
 
@@ -108,6 +109,7 @@
   
   self.display.text = [NSString stringWithFormat: @"%g", result];
   self.history.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
+  [self updateVariablesDisplay];
 }
 
 - (IBAction)testVariablesPressed:(UIButton *)sender {
@@ -133,6 +135,9 @@
     self.testVariableValues = nil;
   }
   
+  double result = [CalculatorBrain runProgram:self.brain.program
+                          usingVariableValues:self.testVariableValues];
+  self.display.text = [NSString stringWithFormat:@"%g", result];
   [self updateVariablesDisplay];
 }
 
