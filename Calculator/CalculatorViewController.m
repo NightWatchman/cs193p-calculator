@@ -39,6 +39,11 @@
 	self.userIsInTheMiddleOfEnteringNumber = NO;
 }
 
+- (IBAction)variablePressed:(UIButton *)sender {
+  [self.brain pushVariable:[sender currentTitle]];
+  self.history.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
+}
+
 - (IBAction)backPressed {
   NSString *displayText = self.display.text;
 	displayText = [displayText substringToIndex: displayText.length - 1];
