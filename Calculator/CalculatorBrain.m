@@ -15,22 +15,24 @@
 
 @implementation CalculatorBrain
 
+
 + (NSString *)descriptionOfProgram:(id)program {
   NSMutableArray *stack;
 	if ([program isKindOfClass: [NSArray class]]) {
 		stack = [program mutableCopy];
 	}
 	
-  NSString *description = [self descriptionOfTopOfStack:stack];
+  NSString *description = [self descriptionOfTopOfStack:stack:nil];
   while ([stack count] > 0) {
     description = [description stringByAppendingFormat:
-                   @", %@", [self descriptionOfTopOfStack:stack]];
+                   @", %@", [self descriptionOfTopOfStack:stack:nil]];
   }
   
 	return description;
 }
 
-+ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)
+                                stack:(NSString *)preOp {
   NSString *description;
   
   id topOfStack = [stack lastObject];
@@ -38,13 +40,19 @@
   
   if ([topOfStack isKindOfClass:[NSString class]]) {  
     if ([self isBinaryOperand:topOfStack]) {
-      NSString *op1 = [self descriptionOfTopOfStack:stack];
-      NSString *op2 = [self descriptionOfTopOfStack:stack];
+      NSString *op1 = [self descriptionOfTopOfStack:stack:topOfStack];
+      NSString *op2 = [self descriptionOfTopOfStack:stack:topOfStack];
       // outputted in reverse order to negate Reverse Polish order
       description = [[NSString alloc]
                      initWithFormat:@"%@ %@ %@", op2, topOfStack, op1];
+      
+      NSSet *plusAndMinus = [NSSet setWithObjects:@"+", @"-", nil];
+      NSSet *multiplyAndDivide = [NSSet setWithObjects:@"*", @"/", nil];
+      if ([plusAndMinus containsObject:topOfStack] &&
+          [multiplyAndDivide containsObject:preOp])
+        description = [NSString stringWithFormat:@"(%@)", description];
     } else if ([self isUnaryOperand:topOfStack]) {
-      NSString *op = [self descriptionOfTopOfStack:stack];
+      NSString *op = [self descriptionOfTopOfStack:stack:topOfStack];
       description = [[NSString alloc]
                      initWithFormat:@"%@(%@)", topOfStack, op];
     } else {
@@ -61,8 +69,8 @@
 }
 
 + (BOOL)isBinaryOperand:(NSString *)operand {
-  NSSet *binaryOperands =
-  [[NSSet alloc] initWithObjects:@"+", @"*", @"-", @"/", nil];
+  NSSet *binaryOperands = [NSSet setWithObjects:@"*", @"/", @"+", @"-", nil];
+
   return [binaryOperands containsObject:operand];
 }
 
@@ -175,7 +183,7 @@
 	return programStack_;
 }
 
-- (id) program {
+- (id)program {
 	return [self.programStack copy];
 }
 
