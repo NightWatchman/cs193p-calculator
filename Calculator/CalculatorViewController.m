@@ -21,6 +21,7 @@
 
 @synthesize display = _display;
 @synthesize history = _history;
+@synthesize variables = _variables;
 @synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
 @synthesize brain = _brain;
 @synthesize testVariableValues = _testVariableValues;
@@ -75,9 +76,7 @@
 }
 
 - (IBAction)enterPressed {
-	double pushing = [self.display.text doubleValue];
-//	self.history.text = [self.history.text stringByAppendingFormat:@"%g ", pushing];
-	[self.brain pushOperand: pushing];
+	[self.brain pushOperand:[self.display.text doubleValue]];
   self.history.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
 	self.userIsInTheMiddleOfEnteringNumber = NO;
 }
@@ -89,9 +88,8 @@
 		else
 			self.display.text = [@"-" stringByAppendingString:self.display.text];
 	} else {
-//    self.history.text = [self.history.text stringByAppendingFormat:@"%@ = ", @"±"];
-    self.history.text =
-            [CalculatorBrain descriptionOfProgram:self.brain.program];
+    self.history.text = [CalculatorBrain descriptionOfProgram:
+                         self.brain.program];
     
 		double result = [self.brain performOperation:@"switch_sign"];
 		self.display.text = [NSString stringWithFormat:@"%g", result];
@@ -104,12 +102,12 @@
 	}
   
 	NSString *operation = [sender currentTitle];
-//	self.history.text = [self.history.text stringByAppendingFormat: @"%@ = ", operation];
-	double result = [self.brain performOperation:operation];
+  [self.brain pushOperation:operation];
+  double result = [CalculatorBrain runProgram:self.brain.program
+                          usingVariableValues:self.testVariableValues];
   
+  self.display.text = [NSString stringWithFormat: @"%g", result];
   self.history.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
-  
-	self.display.text = [NSString stringWithFormat: @"%g", result];
 }
 
 - (IBAction)testVariablesPressed:(UIButton *)sender {
@@ -134,12 +132,28 @@
   } else {
     self.testVariableValues = nil;
   }
+  
+  [self updateVariablesDisplay];
+}
+
+- (void)updateVariablesDisplay {
+  NSSet *variablesUsedInProgram = [CalculatorBrain variablesUsedInProgram:
+                                   self.brain.program];
+  NSString *output = [NSString stringWithString:@""];
+  NSNumber *val;
+  for (NSString *var in variablesUsedInProgram) {
+    val = [self.testVariableValues objectForKey:var];
+    output = [output stringByAppendingFormat:@"%@ = %g ", var, [val doubleValue]];
+  }
+  
+  self.variables.text = output;
 }
 
 - (void)viewDidUnload {
 	[self setHistory:nil];
   [self setDisplay:nil];
   
+  [self setVariables:nil];
 	[super viewDidUnload];
 }
 @end

@@ -100,7 +100,7 @@
   if ([program isKindOfClass:[NSArray class]]) {
     for (id operation in program) {
       if ([operation isKindOfClass:[NSString class]] &&
-          [self isOperation:operation]) {
+          ![self isOperation:operation]) {
         if (!vars) vars = [[NSMutableSet alloc] init];
         [vars addObject:operation];
       }
@@ -167,8 +167,13 @@
     programValue = [stack objectAtIndex:i];
     variableValue = [variableValues objectForKey:programValue];
     
-    // replaces with nil if variable not defined in variableValues
-    [stack replaceObjectAtIndex:i withObject:variableValue];
+    if ([programValue isKindOfClass:[NSString class]] &&
+        ![CalculatorBrain isOperation: programValue]) {
+      if (variableValue)
+        [stack replaceObjectAtIndex:i withObject:variableValue];
+      else
+        [stack replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:0]];
+    }
   }
   
   return [self runProgram:[stack copy]];
@@ -195,7 +200,11 @@
 - (void)pushVariable:(NSString *)variable {
 	// attempts to push variables with the same names as operations are
 	// not protected against
-	[self.programStack addObject: variable];
+	[self.programStack addObject:variable];
+}
+
+- (void)pushOperation:(NSString *)operation {
+  [self.programStack addObject:operation];
 }
 
 - (double)performOperation:(NSString *)operation {
