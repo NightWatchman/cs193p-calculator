@@ -12,6 +12,7 @@
 
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringNumber;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSDictionary *testVariableValues;
 
 @end
 
@@ -22,6 +23,7 @@
 @synthesize history = _history;
 @synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
 @synthesize brain = _brain;
+@synthesize testVariableValues = _testVariableValues;
 
 // Getter for brain (Calculator model)
 - (CalculatorBrain *)brain {
@@ -30,6 +32,7 @@
 	return _brain;
 }
 
+
 // Executed when clear button is pressed.
 // Resets calculator to zeroed out, initial defaults
 - (IBAction)clearPressed {
@@ -37,6 +40,7 @@
 	self.display.text = @"0";
 	self.history.text = @"";
 	self.userIsInTheMiddleOfEnteringNumber = NO;
+  self.testVariableValues = nil;
 }
 
 - (IBAction)variablePressed:(UIButton *)sender {
@@ -108,9 +112,34 @@
 	self.display.text = [NSString stringWithFormat: @"%g", result];
 }
 
+- (IBAction)testVariablesPressed:(UIButton *)sender {
+  NSArray *keys = [NSArray arrayWithObjects:@"x", @"y", @"z", nil];
+  
+  if ([@"Test 1" isEqualToString:[sender currentTitle]]) {
+    NSArray *vals = [NSArray arrayWithObjects:
+                     [NSNumber numberWithInt:0],
+                     [NSNumber numberWithInt:0],
+                     [NSNumber numberWithInt:0],
+                     nil];
+    self.testVariableValues = [NSDictionary dictionaryWithObjects:
+                               vals forKeys:keys];
+  } else if ([@"Test 2" isEqualToString:[sender currentTitle]]) {
+    NSArray *vals = [NSArray arrayWithObjects:
+                     [NSNumber numberWithDouble:1.23],
+                     [NSNumber numberWithDouble:4.56],
+                     [NSNumber numberWithDouble:7.89],
+                     nil];
+    self.testVariableValues = [NSDictionary dictionaryWithObjects:
+                               vals forKeys:keys];
+  } else {
+    self.testVariableValues = nil;
+  }
+}
+
 - (void)viewDidUnload {
 	[self setHistory:nil];
   [self setDisplay:nil];
+  
 	[super viewDidUnload];
 }
 @end
