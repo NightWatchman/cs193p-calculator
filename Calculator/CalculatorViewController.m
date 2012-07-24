@@ -125,35 +125,6 @@
   [self updateVariablesDisplay];
 }
 
-- (IBAction)testVariablesPressed:(UIButton *)sender {
-  NSArray *keys = [NSArray arrayWithObjects:@"x", @"y", @"z", nil];
-  
-  if ([@"Test 1" isEqualToString:[sender currentTitle]]) {
-    NSArray *vals = [NSArray arrayWithObjects:
-                     [NSNumber numberWithInt:0],
-                     [NSNumber numberWithInt:0],
-                     [NSNumber numberWithInt:0],
-                     nil];
-    self.testVariableValues = [NSDictionary dictionaryWithObjects:
-                               vals forKeys:keys];
-  } else if ([@"Test 2" isEqualToString:[sender currentTitle]]) {
-    NSArray *vals = [NSArray arrayWithObjects:
-                     [NSNumber numberWithDouble:1.23],
-                     [NSNumber numberWithDouble:4.56],
-                     [NSNumber numberWithDouble:7.89],
-                     nil];
-    self.testVariableValues = [NSDictionary dictionaryWithObjects:
-                               vals forKeys:keys];
-  } else {
-    self.testVariableValues = nil;
-  }
-  
-  double result = [CalculatorBrain runProgram:self.brain.program
-                          usingVariableValues:self.testVariableValues];
-  self.display.text = [NSString stringWithFormat:@"%g", result];
-  [self updateVariablesDisplay];
-}
-
 - (void)updateVariablesDisplay {
   NSSet *variablesUsedInProgram = [CalculatorBrain variablesUsedInProgram:
                                    self.brain.program];
