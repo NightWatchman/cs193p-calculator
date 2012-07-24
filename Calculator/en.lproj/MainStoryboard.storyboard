@@ -389,8 +389,44 @@
                                     <action selector="variablePressed:" destination="2" eventType="touchUpInside" id="Dhp-tp-Nc3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="l7F-rC-YsW">
-                                <rect key="frame" x="20" y="412" width="281" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eeB-ZY-PDM">
+                                <rect key="frame" x="92" y="322" width="136" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Graph Program">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="phz-SF-gTF" kind="push" identifier="GraphSegue" id="67r-gc-NJX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Calculator" id="oPL-bE-VXy"/>
+                    <connections>
+                        <outlet property="display" destination="SnX-Vg-Hcb" id="W3a-sM-QwR"/>
+                        <outlet property="history" destination="Ru3-oJ-rUs" id="Dah-Te-8u1"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-165" y="-26"/>
+        </scene>
+        <!--Graph View Controller - Graph-->
+        <scene sceneID="C36-vJ-dtA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4IO-G5-Eon" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="phz-SF-gTF" customClass="GraphViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CFN-IV-0cs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="lOY-Dc-gBE">
+                                <rect key="frame" x="20" y="375" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -399,15 +435,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Calculator" id="oPL-bE-VXy"/>
+                    <navigationItem key="navigationItem" title="Graph" id="r5b-Jw-E1b"/>
                     <connections>
-                        <outlet property="display" destination="SnX-Vg-Hcb" id="W3a-sM-QwR"/>
-                        <outlet property="history" destination="Ru3-oJ-rUs" id="Dah-Te-8u1"/>
-                        <outlet property="variables" destination="l7F-rC-YsW" id="B7b-on-jNd"/>
+                        <outlet property="description" destination="lOY-Dc-gBE" id="fou-mk-Gpx"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-141" y="-20"/>
+            <point key="canvasLocation" x="248" y="-26"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sTN-cB-ePE">
@@ -434,7 +468,12 @@
             <relationships>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="history" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="variables" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GraphViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="description" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>

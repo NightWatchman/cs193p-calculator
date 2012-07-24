@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07BE3EEB15BE3FDD00B4FDA1 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BE3EEA15BE3FDC00B4FDA1 /* GraphViewController.m */; };
 		07D9457C159FF885004B4465 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D9457B159FF885004B4465 /* UIKit.framework */; };
 		07D9457E159FF885004B4465 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D9457D159FF885004B4465 /* Foundation.framework */; };
 		07D94580159FF885004B4465 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D9457F159FF885004B4465 /* CoreGraphics.framework */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07BE3EE915BE3FDC00B4FDA1 /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
+		07BE3EEA15BE3FDC00B4FDA1 /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
 		07D94577159FF885004B4465 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D9457B159FF885004B4465 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		07D9457D159FF885004B4465 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -88,6 +91,8 @@
 				07D94590159FF886004B4465 /* CalculatorViewController.h */,
 				07D94591159FF886004B4465 /* CalculatorViewController.m */,
 				07D94582159FF885004B4465 /* Supporting Files */,
+				07BE3EE915BE3FDC00B4FDA1 /* GraphViewController.h */,
+				07BE3EEA15BE3FDC00B4FDA1 /* GraphViewController.m */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				07D9458C159FF886004B4465 /* CalculatorAppDelegate.m in Sources */,
 				07D94592159FF886004B4465 /* CalculatorViewController.m in Sources */,
 				07D9459A15A00E8F004B4465 /* CalculatorBrain.m in Sources */,
+				07BE3EEB15BE3FDD00B4FDA1 /* GraphViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +287,7 @@
 				07D94597159FF886004B4465 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

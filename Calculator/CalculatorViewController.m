@@ -6,6 +6,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 
 @interface CalculatorViewController()
@@ -21,7 +22,6 @@
 
 @synthesize display = _display;
 @synthesize history = _history;
-@synthesize variables = _variables;
 @synthesize userIsInTheMiddleOfEnteringNumber = _userIsInTheMiddleOfEnteringNumber;
 @synthesize brain = _brain;
 @synthesize testVariableValues = _testVariableValues;
@@ -69,7 +69,6 @@
     self.display.text = [NSString stringWithFormat:@"%g", result];
     self.history.text = [CalculatorBrain descriptionOfProgram:
                          self.brain.program];
-    [self updateVariablesDisplay];
   }
 }
 
@@ -122,26 +121,18 @@
   
   self.display.text = [NSString stringWithFormat: @"%g", result];
   self.history.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
-  [self updateVariablesDisplay];
 }
 
-- (void)updateVariablesDisplay {
-  NSSet *variablesUsedInProgram = [CalculatorBrain variablesUsedInProgram:
-                                   self.brain.program];
-  NSString *output = [NSString stringWithString:@""];
-  NSNumber *val;
-  for (NSString *var in variablesUsedInProgram) {
-    val = [self.testVariableValues objectForKey:var];
-    output = [output stringByAppendingFormat:@"%@ = %g ", var, [val doubleValue]];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+  if ([segue.identifier isEqualToString: @"GraphSegue"]) {
+    GraphViewController *graphViewController = segue.destinationViewController;
+    graphViewController.program = self.brain.program;
   }
-  
-  self.variables.text = output;
 }
 
 - (void)viewDidUnload {
 	[self setHistory:nil];
   [self setDisplay:nil];
-  [self setVariables:nil];
 	[super viewDidUnload];
 }
 @end
