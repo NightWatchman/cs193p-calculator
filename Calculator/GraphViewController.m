@@ -14,8 +14,9 @@
 @synthesize description = description_;
 @synthesize program = program_;
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+      (UIInterfaceOrientation)interfaceOrientation {
+  return YES;
 }
 
 - (void)viewDidLoad {
@@ -24,6 +25,7 @@
 
 - (void)viewDidUnload {
   description_ = nil;
+  program_ = nil;
 }
 
 @end
